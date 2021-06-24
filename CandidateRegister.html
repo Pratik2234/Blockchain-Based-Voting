@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Candidate Register Form</title>  
+<!-- 
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="connect.js"></script> -->
+    
+    <style>
+
+        *{
+
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+
+        }
+
+        body{
+
+            background:url("Image_4.jpg");
+            background-size: cover;
+        }
+
+        .login-form{
+
+            width: 400px;
+            top:40%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            position:absolute;
+            color: #fff;
+        }
+
+        .login-form h1{
+
+            font-size: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            margin: 40px,0;
+        }
+
+        .login-form p{
+            font-size: 20px;
+            margin: 15px 0;
+
+        }
+
+        .login-form input{
+            font-size: 20px;
+            width: 100%;
+            padding: 15px 10px;
+            border: 0;
+            outline: none;
+            border-radius: 5px;
+
+        }
+
+        .login-form button{
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 30px ;
+            margin-left: 10px;
+            padding: 10px 15px;
+            width: 30%;
+            border-radius: 5px;
+            border: 0;
+
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="login-form">
+        <h1>Candidate Register Form</h1>
+            <p>Name</p>
+            <input type="text" id="cname" placeholder=" Enter Your Email ">
+            <p>Party Name</p>
+            <input type="text" id="cparty" placeholder=" Enter Your Email ">
+            <p>Address</p>
+            <input type="text" id="caddress" placeholder="Password">
+
+            <button onclick="Register()" id="signin">Sign In</button>
+  
+            
+    </div>
+
+    <script>
+        function Register(){
+
+             name=[];
+             party=[];
+             ad=[];
+
+            name.push(document.getElementById("cname").value);
+            party.push(document.getElementById("cparty").value);
+            ad.push(document.getElementById("caddress").value);
+ 
+            var k="byyy";
+            var l="lie";
+            localStorage.setItem("name",k);
+            localStorage.setItem("party",l);
+            window.location.href="temp1.html";
+
+        }
+    </script>
+
+</body>
+</html>

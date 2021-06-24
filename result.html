@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Voting  Result</title>
+    <style>
+        .imgk {
+				-webkit-filter: blur(2px);
+				filter: blur(2px);
+			}
+			.ye {
+				color : black;
+			}
+			.backgr-text {
+				position: absolute;
+				top: 10%;
+				text-align: center;
+			}
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <center>
+        <img src="Winner.png" class="imgk"  width="100%" alt="filter applied" />
+    
+        <div class="backgr-text">
+            <p class="ye" id ="getvalue" style="font-size: 150px ; text-align: center;"></p>
+            <p style="font-size: 70px; text-align: center; " id="getcount"></p>
+            <a href="home.Html"><button style="background-color :whitesmoke; padding: 15px 15px; font-size: 25px; border-radius: 10px;">Next</button></a>
+        </div>
+    </center>
+    <script>
+         let wn=localStorage.getItem("wwn");
+         let wc=localStorage.getItem("wwc");
+
+         let str1="Winner is : ";
+         let str3=str1.concat(wn);
+
+         let str2=" Count is : ";
+         let str4=str2.concat(wc);
+
+         document.getElementById("getvalue").innerHTML=str3;
+         document.getElementById("getcount").innerHTML=str4;
+
+    </script>
+</body>
+</html>

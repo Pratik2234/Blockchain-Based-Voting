@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Voting Form</title>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+
+*{
+
+padding: 0;
+margin: 0;
+font-family: sans-serif;
+
+}
+
+body{
+
+background:url("Image_4.jpg");
+background-size: cover;
+}
+
+.login-form{
+
+width: 400px;
+top:40%;
+left: 50%;
+transform: translate(-50%,-50%);
+position:absolute;
+color: #fff;
+}
+
+.login-form h1{
+
+font-size: 40px;
+text-align: center;
+text-transform: uppercase;
+margin: 40px,0;
+}
+
+.login-form p{
+font-size: 20px;
+margin: 15px 0;
+
+}
+
+.login-form input{
+font-size: 20px;
+width: 100%;
+color: black;
+padding: 15px 10px;
+border: 0;
+outline: none;
+border-radius: 5px;
+
+}
+
+
+.login-form select{
+font-size: 20px;
+width: 100%;
+padding: 15px 10px;
+border: 0;
+outline: none;
+border-radius: 5px;
+
+}
+
+.login-form button{
+font-size: 18px;
+font-weight: bold;
+margin-top: 30px ;
+margin-left: 10px;
+padding: 10px 15px;
+width: 30%;
+border-radius: 5px;
+border: 0;
+
+}
+    </style>
+</head>
+<body>
+    <!-- <input type="text" name="candidateName" id="cn"><br>
+    <input type="text" name="candidateName" id="vn"><br>
+    <button id="winner" type="submit">set count</button>
+    <button id="get" type="submit">get counts</button> -->
+
+    <div class="login-form">
+        <h1>Candidate Voting Form</h1>
+            <p> Candidate Name</p>
+            <select name="cadidatenames" id="cn">
+                <option value="Pratik">Pratik</option>
+                <option value="Rahul">Rahul</option>
+                <option value="Ritesh">Ritesh</option>
+                <option value="Balram">Balram</option>
+              </select>
+            <p>Voters Name</p>
+
+            <p id="vn" style="background-color:white; font-size: 25px; border-radius: 5px;text-align: left;padding: 15px 10px;color: black;"></p>
+            
+            <button type="submit" id="set">Vote</button><br><br>
+            <button type="submit" id="get">Next</button>
+  
+            
+    </div>
+
+
+
+    <script>
+        var myContract;
+        let aa=localStorage.getItem("em");
+        let bb=localStorage.getItem("pas");
+
+        window.onload=function(){
+            document.getElementById("vn").innerHTML=aa;
+
+        }
+        async function CheckMetamaskConnection() {
+            // Modern dapp browsers...
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum);
+                try {
+                    // Request account access if needed
+                    await ethereum.enable();
+                    // Acccounts now exposed
+                    return true;
+                } catch (error) {
+                    // User denied account access...
+                    return false;
+                }
+            }
+            // Legacy dapp browsers...
+            else if (window.web3) {
+                window.web3 = new Web3(web3.currentProvider);
+                // Acccounts always exposed
+
+                return true;
+            }
+            // Non-dapp browsers...
+            else {
+                console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+                return false;
+            }
+        }
+
+        $(document).ready(async function () {
+            var IsMetamask = await CheckMetamaskConnection();
+            if (IsMetamask) {
+                var Address="0x39063CB9C2DCA5F37d3b41Fa99d5E339A1d10dE5";
+                var ABI=[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "candidateName",
+				"type": "string"
+			}
+		],
+		"name": "vote",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "winner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "WinnerCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+	
+                myContract =new web3.eth.Contract(ABI,Address);//await web3.eth.contract(ABI).at(Address);
+                console.log("Metamask detected!")
+            } else {
+                console.log("Metamask not detected");
+            }
+        });
+
+        document.getElementById("set").onclick=function(){
+            let ca=document.getElementById("cn").value;
+            let vo=document.getElementById("vn").value;
+            myContract.methods.vote(ca).send({from:'0x6Ab47Bee9C6dD9968821FC2De0eA9b8647c26dF9'})
+            .then(function(reciept){
+                console.log(reciept);
+            });
+
+            
+
+            
+        }
+
+        document.getElementById("get").onclick=function(){
+            
+            myContract.methods.winner().call()
+            .then(function(win){
+                console.log(win);
+                localStorage.setItem("wwn",win);
+                window.location.href="result.html";
+            });
+
+            myContract.methods.WinnerCount().call()
+            .then(function(count){
+                console.log(count);
+                localStorage.setItem("wwc",count);
+                 window.location.href="result.html";
+            });
+           
+        }
+    </script>
+</body>
+</html>
